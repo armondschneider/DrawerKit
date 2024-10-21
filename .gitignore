@@ -1,0 +1,41 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Xcode
+DerivedData/
+*.xcworkspace/
+xcuserdata/
+.idea/
+*.xcodeproj/project.xcworkspace/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/*.xcuserstate
+
+# Build artifacts
+build/
+Build/
+*.o
+*.d
+*.dia
+*.ll
+*.bc
+*.aux
+*.bbl
+*.blg
+
+# Logs
+*.log
+*.xcresult
+
+# Temporary files
+*.tmp
+*.DS_Store
+
+# macOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes

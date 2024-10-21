@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		994C31532CC6D31A0029B210 /* DrawerKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 994C31482CC6D31A0029B210 /* DrawerKit.framework */; };
+		99DD4A9D2CC700A6001CDA40 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 99DD4A9C2CC7009E001CDA40 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,6 +24,8 @@
 /* Begin PBXFileReference section */
 		994C31482CC6D31A0029B210 /* DrawerKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DrawerKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		994C31522CC6D31A0029B210 /* DrawerKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrawerKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		99DD4A9A2CC70071001CDA40 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+		99DD4A9C2CC7009E001CDA40 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -73,6 +76,8 @@
 		994C313E2CC6D31A0029B210 = {
 			isa = PBXGroup;
 			children = (
+				99DD4A9C2CC7009E001CDA40 /* .gitignore */,
+				99DD4A9A2CC70071001CDA40 /* Package.swift */,
 				994C314A2CC6D31A0029B210 /* DrawerKit */,
 				994C31562CC6D31A0029B210 /* DrawerKitTests */,
 				994C31492CC6D31A0029B210 /* Products */,
@@ -190,6 +195,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99DD4A9D2CC700A6001CDA40 /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
