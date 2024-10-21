@@ -25,22 +25,28 @@ public struct DrawerView<Content: View>: View {
     public var body: some View {
         GeometryReader { geometry in
             VStack {
-                Spacer() // Push content to the bottom
+                Spacer() // Push drawer to the bottom
 
                 VStack {
                     Capsule()
                         .frame(width: 30, height: 8)
                         .foregroundColor(.gray.opacity(0.6))
                         .padding(.top, 8)
-                    content() // Render user-defined content inside the drawer
+                    
+                    content() // User-defined content inside the drawer
+                        .frame(maxWidth: .infinity) // Center content horizontally
+                        .padding()
                 }
-                .frame(width: geometry.size.width, height: geometry.size.height * heightRatio)
+                .frame(
+                    width: geometry.size.width - 32, // Side margins
+                    height: geometry.size.height * heightRatio
+                )
                 .background(
-                    RoundedRectangle(cornerRadius: 25)
+                    RoundedRectangle(cornerRadius: 40)
                         .fill(Color(.systemBackground))
                 )
-                // Open/Close animation
-                .offset(y: isPresented ? 0 : geometry.size.height)
+                .padding(.bottom, geometry.safeAreaInsets.bottom + -12) // Safe area padding
+                .offset(y: isPresented ? 0 : geometry.size.height) // Slide animation
                 .animation(.spring(), value: isPresented)
                 .gesture(
                     DragGesture()
@@ -51,6 +57,7 @@ public struct DrawerView<Content: View>: View {
                         }
                 )
             }
+            .frame(maxWidth: .infinity) // Center drawer horizontally
             .edgesIgnoringSafeArea(.bottom)
         }
     }
@@ -67,7 +74,7 @@ struct DrawerView_Previews: PreviewProvider {
 
         var body: some View {
             ZStack {
-                Color.gray.opacity(0.3) // Background color for the preview
+                Color.gray.opacity(0.3) // Background for the preview
                     .ignoresSafeArea()
 
                 Button("Toggle Drawer") {
@@ -86,13 +93,13 @@ struct DrawerView_Previews: PreviewProvider {
                         Text("Drawer Content")
                             .font(.title)
                             .padding(.bottom, 10)
+                        
                         Button("Close Drawer") {
                             withAnimation {
                                 showDrawer = false
                             }
                         }
                     }
-                    .padding()
                 }
             }
         }
