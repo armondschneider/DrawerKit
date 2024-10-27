@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "DrawerKit",
     platforms: [
-        .iOS(.v13)
+        .iOS(.v14)
     ],
     products: [
         .library(
@@ -13,18 +13,12 @@ let package = Package(
             targets: ["DrawerKit"]
         )
     ],
-    dependencies: [
-        // Add any external dependencies here (if any)
-    ],
     targets: [
-        // Define the DrawerKit target with source files
         .target(
             name: "DrawerKit",
-            dependencies: [],
             path: "Sources/DrawerKit",
-            exclude: ["Resources"]
+            exclude: []
         ),
-        // Define the test target for DrawerKit
         .testTarget(
             name: "DrawerKitTests",
             dependencies: ["DrawerKit"],
