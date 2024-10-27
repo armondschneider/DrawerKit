@@ -1,4 +1,8 @@
 # DrawerKit
+<p>
+    <img src="DrawerKit-Logo.png" width="150" height="150"/>
+</p>
+
 
 **DrawerKit** is a lightweight and customizable Swift package that provides smooth, animated bottom drawers for iOS applications. It simplifies the process of adding a modern drawer interface with a few lines of code.
 
