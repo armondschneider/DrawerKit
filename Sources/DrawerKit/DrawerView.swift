@@ -27,15 +27,20 @@ public struct DrawerView<Content: View>: View {
             VStack {
                 Spacer()
 
-                VStack {
+                VStack(spacing: 0) {
+                    // Sticky Capsule
                     Capsule()
                         .frame(width: 30, height: 8)
                         .foregroundColor(.gray.opacity(0.6))
                         .padding(.top, 8)
+                        .padding(.bottom, 8)
                     
-                    content()
-                        .frame(maxWidth: .infinity)
-                        .padding()
+                    // Scrollable content change if needed
+                    ScrollView {
+                        content()
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                    }
                 }
                 .frame(
                     width: geometry.size.width - 32,
@@ -45,7 +50,7 @@ public struct DrawerView<Content: View>: View {
                     RoundedRectangle(cornerRadius: 40)
                         .fill(Color(.systemBackground))
                 )
-                .padding(.bottom, geometry.safeAreaInsets.bottom + -12)
+                .padding(.bottom, geometry.safeAreaInsets.bottom - 12)
                 .offset(y: isPresented ? 0 : geometry.size.height) // Slide animation
                 .animation(.spring(), value: isPresented)
                 .gesture(
