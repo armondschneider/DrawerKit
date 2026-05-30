@@ -1,66 +1,113 @@
 # DrawerKit
+
 <p>
     <img src="DrawerKit-Logo.png" width="150" height="150"/>
 </p>
 
-
-**DrawerKit** is a lightweight and customizable Swift package that provides smooth, animated bottom drawers for iOS applications. It simplifies the process of adding a modern drawer interface with a few lines of code.
+SwiftUI bottom drawers for iOS 26 with content-fitting height, max-height detents, live drag physics, rubber-band resistance, liquid-glass styling, and a sheet-like modifier API.
 
 ## Features
-- **Smooth slide-up animation**
-- **Swipe to dismiss with spring effect**
-- **Customizable height and content**
-- **Supports safe area insets for iPhones with home indicators**
+
+- Interactive drag-to-dismiss with snap-back
+- Rubber-band resistance when over-dragging
+- Content, fractional, and fixed-height detents
+- Content-fitting drawer height with automatic scrolling past max height
+- Customizable style, grabber, dimmed backdrop, and content padding
+- Liquid-glass default styling with material, translucency, and subtle border
+- Optional image-grid example component with custom detail content
 
 ## Installation
 
-### Swift Package Manager
-To install DrawerKit, follow these steps:
-1. In Xcode, go to **File > Add Packages...**
-2. Enter the GitHub URL for the DrawerKit repository:
-3. Select the version and add it to your project.
+Add this repository in Xcode with **File > Add Packages...**, then add `DrawerKit` to your app target.
 
-## Usage
-
-### Basic Example
-
-Here’s how you can use `DrawerView` in your SwiftUI project:
+## Basic Usage
 
 ```swift
 import SwiftUI
 import DrawerKit
 
 struct ContentView: View {
- @State private var showDrawer = false
+    @State private var showDrawer = false
 
- var body: some View {
-     ZStack {
-         Color.gray.opacity(0.3)
-             .ignoresSafeArea()
+    var body: some View {
+        Button("Open Drawer") {
+            showDrawer = true
+        }
+        .drawer(isPresented: $showDrawer, detent: .content) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Drawer Content")
+                    .font(.title)
 
-         Button("Toggle Drawer") {
-             withAnimation {
-                 showDrawer.toggle()
-             }
-         }
-         .font(.headline)
-         .foregroundColor(.white)
-         .padding()
-         .background(Color.blue)
-         .cornerRadius(12)
-
-         DrawerView(isPresented: $showDrawer, heightRatio: 0.4) {
-             VStack {
-                 Text("Drawer Content")
-                     .font(.title)
-                     .padding(.bottom, 10)
-                 Button("Close Drawer") {
-                     withAnimation {
-                         showDrawer = false
-                     }
-                 }
-             }
-         }
-     }
- }
+                Text("This drawer hugs content and scrolls if it exceeds the max height.")
+            }
+        }
+    }
 }
+```
+
+## Direct Drawer
+
+```swift
+DrawerView(
+    isPresented: $showDrawer,
+    detent: .fraction(0.55),
+    showsDimmedBackground: true,
+    sizesToFitContent: true
+) {
+    VStack(alignment: .leading, spacing: 12) {
+        Text("Custom Drawer")
+        Button("Close") { showDrawer = false }
+    }
+}
+```
+
+## Detents
+
+```swift
+.content        // Hug content up to the max safe height
+.fraction(0.6)  // Cap at 60% of available height
+.height(420)    // Cap at a fixed height
+```
+
+## Styling
+
+```swift
+let style = DrawerStyle(
+    cornerRadius: 34,
+    horizontalPadding: 8,
+    bottomPadding: 8,
+    usesLiquidGlass: true,
+    contentPadding: EdgeInsets(top: 0, leading: 12, bottom: 16, trailing: 12)
+)
+```
+
+## Image Drawer Example
+
+`MorphingImageDrawerView` is an example component built on top of `DrawerView`. It accepts custom thumbnail and detail builders.
+
+```swift
+MorphingImageDrawerView(
+    isPresented: $showDrawer,
+    selectedItemID: $selectedItemID,
+    items: items,
+    style: style
+) { item in
+    AsyncImage(url: item.imageURL) { image in
+        image.resizable().scaledToFill()
+    } placeholder: {
+        Color.gray.opacity(0.24)
+    }
+} detail: { item in
+    VStack(alignment: .leading, spacing: 14) {
+        Text(item.title).font(.title)
+        Text(item.text)
+        Button("Continue") {}
+    }
+}
+```
+
+## Requirements
+
+- iOS 26+
+- macOS 26+
+- SwiftUI
