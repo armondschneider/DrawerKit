@@ -1,110 +1,89 @@
 # DrawerKit
 
-<p>
-    <img src="DrawerKit-Logo.png" width="150" height="150"/>
+Simple SwiftUI bottom drawers with dynamic height, drag-to-dismiss, dimmed backdrop, and sheet-like ergonomics.
+
+<p align="center">
+  <img src="preview.gif" width="320" alt="DrawerKit preview">
 </p>
 
-SwiftUI bottom drawers for iOS 26 with content-fitting height, max-height detents, live drag physics, rubber-band resistance, liquid-glass styling, and a sheet-like modifier API.
+## Install
 
-## Features
+Add this repo in Xcode with **File > Add Package Dependencies...**, then add `DrawerKit` to your app target.
 
-- Interactive drag-to-dismiss with snap-back
-- Rubber-band resistance when over-dragging
-- Content, fractional, and fixed-height detents
-- Content-fitting drawer height with automatic scrolling past max height
-- Customizable style, grabber, dimmed backdrop, and content padding
-- Liquid-glass default styling with material, translucency, and subtle border
-- Optional image-grid example component with custom detail content
-
-## Installation
-
-Add this repository in Xcode with **File > Add Packages...**, then add `DrawerKit` to your app target.
-
-## Basic Usage
+## Usage
 
 ```swift
-import SwiftUI
 import DrawerKit
+import SwiftUI
 
 struct ContentView: View {
     @State private var showDrawer = false
 
     var body: some View {
-        Button("Open Drawer") {
-            showDrawer = true
+        ZStack {
+            Button("Open Drawer") {
+                showDrawer = true
+            }
         }
-        .drawer(isPresented: $showDrawer, detent: .content) {
+        .drawer(isPresented: $showDrawer) {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Drawer Content")
-                    .font(.title)
+                Text("Drawer")
+                    .font(.title2.bold())
 
-                Text("This drawer hugs content and scrolls if it exceeds the max height.")
+                Text("Content drives the drawer height.")
+                    .foregroundStyle(.secondary)
             }
         }
     }
 }
 ```
 
-## Direct Drawer
+## Options
 
 ```swift
-DrawerView(
+.drawer(
     isPresented: $showDrawer,
-    detent: .fraction(0.55),
-    showsDimmedBackground: true,
-    sizesToFitContent: true
+    detent: .content,
+    style: DrawerStyle(),
+    control: .dragIndicator
 ) {
-    VStack(alignment: .leading, spacing: 12) {
-        Text("Custom Drawer")
-        Button("Close") { showDrawer = false }
-    }
+    DrawerContent()
 }
 ```
 
-## Detents
+**Detents**
 
 ```swift
-.content        // Hug content up to the max safe height
-.fraction(0.6)  // Cap at 60% of available height
-.height(420)    // Cap at a fixed height
+.content
+.fraction(0.6)
+.height(420)
 ```
+
+**Controls**
+
+```swift
+.dragIndicator
+.closeButton
+.none
+```
+
+Use `.none` when your drawer content includes custom close, back, or apply buttons.
 
 ## Styling
 
 ```swift
 let style = DrawerStyle(
-    cornerRadius: 34,
-    horizontalPadding: 8,
-    bottomPadding: 8,
-    usesLiquidGlass: true,
-    contentPadding: EdgeInsets(top: 0, leading: 12, bottom: 16, trailing: 12)
+    cornerRadius: 40,
+    horizontalPadding: 16,
+    bottomPadding: 16,
+    contentPadding: EdgeInsets(top: 0, leading: 16, bottom: 18, trailing: 16),
+    animation: .spring(response: 0.44, dampingFraction: 0.72)
 )
 ```
 
-## Image Drawer Example
+## Demo
 
-`MorphingImageDrawerView` is an example component built on top of `DrawerView`. It accepts custom thumbnail and detail builders.
-
-```swift
-MorphingImageDrawerView(
-    isPresented: $showDrawer,
-    selectedItemID: $selectedItemID,
-    items: items,
-    style: style
-) { item in
-    AsyncImage(url: item.imageURL) { image in
-        image.resizable().scaledToFill()
-    } placeholder: {
-        Color.gray.opacity(0.24)
-    }
-} detail: { item in
-    VStack(alignment: .leading, spacing: 14) {
-        Text(item.title).font(.title)
-        Text(item.text)
-        Button("Continue") {}
-    }
-}
-```
+See `Sources/Examples/DemoView.swift` for a schedule-style drawer with native date/time pickers and animated height changes.
 
 ## Requirements
 

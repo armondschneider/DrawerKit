@@ -12,19 +12,18 @@ let package = Package(
         .library(
             name: "DrawerKit",
             targets: ["DrawerKit"]
-        ),
-        .executable(
-            name: "DrawerKitTests",
-            targets: ["DrawerKitTests"]
         )
     ],
     targets: [
         .target(
             name: "DrawerKit",
-            path: "Sources/DrawerKit",
-            exclude: []
+            path: "Sources",
+            sources: [
+                "DrawerKit/Drawer.swift",
+                "Examples/DemoView.swift"
+            ]
         ),
-        .executableTarget(
+        .testTarget(
             name: "DrawerKitTests",
             dependencies: ["DrawerKit"],
             path: "Tests/DrawerKitTests"
